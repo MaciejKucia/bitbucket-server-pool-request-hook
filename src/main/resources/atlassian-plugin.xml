@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<atlassian-plugin key="${atlassian.plugin.key}" name="${project.name}" plugins-version="2">
+  <plugin-info>
+    <description>${project.description}</description>
+    <version>${project.version}</version>
+    <vendor name="${project.organization.name}" url="${project.organization.url}"/>
+    <param name="plugin-icon">images/pluginIcon.png</param>
+    <param name="plugin-logo">images/pluginLogo.png</param>
+  </plugin-info>
+  <!-- add our i18n resource -->
+  <resource type="i18n" name="i18n" location="repopullrequest"/>
+  <!-- add our web resources -->
+  <web-resource key="repopullrequest-resources" name="repopullrequest Web Resources">
+    <dependency>com.atlassian.auiplugin:ajs</dependency>
+    <resource type="download" name="repopullrequest.css" location="/css/repopullrequest.css"/>
+    <resource type="download" name="repopullrequest.js" location="/js/repopullrequest.js"/>
+    <resource type="download" name="images/" location="/images"/>
+    <context>repopullrequest</context>
+    <context>bitbucket.page.repository.settings.hooks</context>
+  </web-resource>
+  <repository-hook key="pr-hook" name="Pull Request Hook" i18n-name-key="pr-hook.name" class="com.maciejkucia.repopullrequest.hook.PullRequestHook">
+    <description key="pr-hook.description">Pull Request Repository Hook Plugin</description>
+    <icon>icon.png</icon>
+    <config-form name="Pull Request Repository Hook Config" key="pr-hook-config">
+      <view>com.maciejkucia.repopullrequest.hook.PullRequestHook.view</view>
+      <directory location="/static/"/>
+    </config-form>
+  </repository-hook>
+</atlassian-plugin>
