@@ -1,4 +1,4 @@
-package com.maciejkucia.repopullrequest.impl;
+package com.maciejkucia.atlasbbplugin.repopullrequest.impl;
 
 import com.atlassian.plugin.spring.scanner.annotation.export.ExportAsService;
 import com.atlassian.plugin.spring.scanner.annotation.imports.ComponentImport;
@@ -8,7 +8,7 @@ import javax.inject.Named;
 
 @ExportAsService ({PrHookPluginComponent.class})
 @Named ("PrHookPluginComponent")
-public class PrHookPluginComponent
+class PrHookPluginComponent
 {
     @ComponentImport
     private final ApplicationProperties applicationProperties;

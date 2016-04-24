@@ -1,0 +1,146 @@
+{namespace com.maciejkucia.atlasbbplugin.repopullrequest.settings}
+
+/**
+ */
+{template .testButton}
+    <button id="testButton"
+            class="button-panel-button">
+        View Logs
+    </button>
+{/template}
+
+/**
+ */
+{template .helpLink}
+    <div style="float:left;padding-top: 5px;">
+        <span class="aui-icon aui-icon-small aui-iconfont-help" style="padding-right: 5px;"></span>
+        <a href="http://wiki.kucia.net/doku.php?id=projects:bitbucket:pullrequestplugin">help</a>
+    </div>
+{/template}
+
+/**
+ * @param? config
+ * @param? errors
+ */
+{template .view}
+    {call aui.form.textField}
+        {param id: 'url' /}
+        {param value: $config ? $config['url'] : 'http://localhost:8089' /}
+        {param labelContent: 'External service URL'  /}
+        {param descriptionText: 'URL of the service to be notified. Templating apply.' /}
+        {param errorTexts: $errors ? $errors['url'] : null /}
+        {param extraClasses: 'full-width-field' /}
+        {param fieldWidth: 'full-width' /}
+    {/call}
+
+    {call aui.form.selectField}
+        {param id: 'restOperation' /}
+        {param labelContent: 'Operation type' /}
+        {param value: $config ? $config['restOperation'] : 'POST'/}
+        {param options: [[ 'text' : 'POST',   'value' : 'POST'],
+                         [ 'text' : 'GET',    'value' : 'GET'],
+                         [ 'text' : 'PUT',    'value' : 'PUT'],
+                         [ 'text' : 'DELETE', 'value' : 'DELETE']] /}
+    {/call}
+
+
+<div class="aui-group">
+    <div class="aui-item">
+    {call aui.form.checkboxField}
+        {param id: 'triggersList' /}
+        {param legendContent: 'Notification triggers Pull Request'  /}
+        {param fields: [[
+             'id': 'PullRequestDeclinedEvent',
+             'labelText': 'Declined',
+             'isChecked': $config['PullRequestDeclinedEvent'] ? $config['PullRequestDeclinedEvent'] : false
+        ],[
+             'id': 'PullRequestMergedEvent',
+             'labelText': 'Merged',
+             'isChecked': $config['PullRequestMergedEvent'] ? $config['PullRequestMergedEvent'] : false
+        ],[
+             'id': 'PullRequestOpenedEvent',
+             'labelText': 'Opened',
+             'isChecked': $config['PullRequestOpenedEvent'] ? $config['PullRequestOpenedEvent'] : false
+        ],[
+             'id': 'PullRequestOpenRequestedEvent',
+             'labelText': 'Open Requested',
+             'isChecked': $config['PullRequestOpenRequestedEvent'] ? $config['PullRequestOpenRequestedEvent'] : false
+        ],[
+             'id': 'PullRequestParticipantsUpdatedEvent',
+             'labelText': 'Participants Updated',
+             'isChecked': $config['PullRequestParticipantsUpdatedEvent'] ? $config['PullRequestParticipantsUpdatedEvent'] : false
+        ],[
+           'id': 'PullRequestUpdatedEvent',
+           'labelText': 'Updated',
+           'isChecked': $config ? $config['PullRequestUpdatedEvent'] : false
+        ]] /}
+    {/call}
+    </div>
+    <div class="aui-item">
+    {call aui.form.checkboxField}
+        {param id: 'triggersList' /}
+        {param legendContent: '' /}
+        {param fields: [[
+            'id': 'PullRequestCommentAddedEvent',
+            'labelText': 'Comment Added',
+            'isChecked': $config['PullRequestCommentAddedEvent'] ? $config['PullRequestCommentAddedEvent'] : false
+        ],[
+            'id': 'PullRequestCommentDeletedEvent',
+            'labelText': 'Comment Deleted',
+            'isChecked': $config['PullRequestCommentDeletedEvent'] ? $config['PullRequestCommentDeletedEvent'] : false
+        ],[
+             'id': 'PullRequestCommentEditedEvent',
+             'labelText': 'Comment Edited',
+             'isChecked': $config['PullRequestCommentEditedEvent'] ? $config['PullRequestCommentEditedEvent'] : false
+        ],[
+             'id': 'PullRequestCommentRepliedEvent',
+             'labelText': 'Comment Replied',
+             'isChecked': $config['PullRequestCommentRepliedEvent'] ? $config['PullRequestCommentRepliedEvent'] : false
+        ],[
+             'id': 'PullRequestRescopedEvent',
+             'labelText': 'Rescoped',
+             'isChecked': $config ? $config['PullRequestRescopedEvent'] : false
+        ],[
+             'id': 'PullRequestReopenedEvent',
+             'labelText': 'Reopened',
+             'isChecked': $config['PullRequestReopenedEvent'] ? $config['PullRequestReopenedEvent'] : false
+        ]] /}
+    {/call}
+    </div>
+</div>
+
+    {call aui.form.textareaField}
+        {param id: 'headers' /}
+        {param descriptionText: 'Each line represents a colon separated key:value.' /}
+        {param labelContent: 'Headers' /}
+        {param rows: 2 /}
+        {param value: $config ? $config['headers'] : null /}
+        {param extraClasses: 'full-width-field' /}
+        {param fieldWidth: 'full-width' /}
+        {param errorTexts: $errors ? $errors['headers'] : null /}
+    {/call}
+
+    {call aui.form.textareaField}
+        {param id: 'messageBody' /}
+        {param descriptionText: 'For example a JSON. Templating apply.' /}
+        {param labelContent: 'Body' /}
+        {param rows: 5 /}
+        {param value: $config ? $config['messageBody'] : null /}
+        {param extraClasses: 'full-width-field' /}
+        {param fieldWidth: 'full-width' /}
+    {/call}
+
+//    {call aui.form.textareaField}
+//        {param id: 'connCerts' /}
+//        {param descriptionText: 'Base64 encoded (pem). All certificates in the chain if needed.' /}
+//        {param labelContent: 'Https certificates' /}
+//        {param rows: 2 /}
+//        {param value: $config ? $config['connCerts'] : null /}
+//        {param extraClasses: 'full-width-field' /}
+//    {/call}
+
+<script>
+    javafunc.wireUpTestButton();
+</script>
+
+{/template}

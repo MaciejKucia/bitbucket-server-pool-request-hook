@@ -2,17 +2,24 @@ var javafunc = {};
 
 javafunc.wireUpTestButton = function () {
     'use strict';
-    var testButton,
-        testHtml = com.maciejkucia.repopullrequest.hook.PullRequestHook.testButton();
+
+    var testButton, testHtml = com.maciejkucia.atlasbbplugin.repopullrequest.settings.testButton();
+    var helpLink, helpHtml = com.maciejkucia.atlasbbplugin.repopullrequest.settings.helpLink();
 
     if (AJS.$('button#testButton').length != 0) {
         return;
     }
 
     testButton = AJS.$('div.dialog-button-panel').prepend(testHtml);
+    helpLink = AJS.$('div.dialog-button-panel').prepend(helpHtml);
 
-    testButton.on('click', function () {
+    //AJS.$('div.dialog-button-panel').prepend('<div class="aui-dialog2-footer-hint">this is a hint</div>');
+
+    AJS.$('#testButton').on('click', function () {
         'use strict';
-        alert('Message');
+        var pageState = require('bitbucket/internal/model/page-state');
+        var url = AJS.contextPath() + '/plugins/servlet/repopullrequest-weblog/' +
+                  pageState.getRepository().getSlug() + '/' + pageState.getProject().getKey();
+        window.open(url, '_blank').focus();
     });
 };
